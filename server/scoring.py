@@ -5,8 +5,19 @@ import torch
 from sklearn.cluster import KMeans
 import random
 from openai import OpenAI
+import os
+from dotenv import load_dotenv
 
-client = OpenAI()
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the API key
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# Ensure the API key is set
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY is not set in the .env file")
+
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 class EssaysDataset(Dataset):
   def __init__(self, data):

@@ -37,3 +37,5 @@ next-env.d.ts
 
 diversify-website/.env.local
 server/.env
+
+.env

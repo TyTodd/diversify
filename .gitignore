@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+diversify-website/node_modules
+diversify-website/.next
 
 # testing
 /coverage

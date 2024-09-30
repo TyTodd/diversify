@@ -1,18 +1,6 @@
 "use client";
-// import { AiChat } from "@nlux/react";
-// import { myCustomAdapter } from "./adapter.js";
-import { useMemo, useEffect, useState } from "react";
-// import "@nlux/themes/nova.css";
-import {
-  Input,
-  Button,
-  Flex,
-  Box,
-  Text,
-  Heading,
-  Badge,
-  useToast,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 
 export default function FileUpload() {
   const [file, setFile] = useState(null);

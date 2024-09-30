@@ -11,65 +11,73 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+interface ApplicantCardProps {
+  applicantName: string;
+  score: number;
+}
 
-  const handleSearch = async () => {
-    // Handle search logic here
-    // console.log('Searching for:', searchTerm);
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:5000/search?applicant_name=${searchTerm}`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      console.log("Fetched data:", data);
-      // Handle the fetched data as needed
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
+// const SearchBar = () => {
+//   const [searchTerm, setSearchTerm] = useState("");
 
-  return (
-    <Flex align="center" justify="center" mt={6} height="20%">
-      <Input
-        placeholder="Search an applicant name..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        size="lg"
-        width="40%"
-        height="40px"
-        color="white" // Text color
-        bg="black" // Background color
-        _placeholder={{ color: "gray.400" }} // Placeholder color
-        borderColor="white" // Outline color
-        borderWidth="2px" // Border thickness
-        borderRadius="10px" // Rounded borders
-        fontSize="lg" // Text size
-        paddingLeft="10px"
-        _focus={{ borderColor: "teal.300", boxShadow: "0 0 0 1px teal.300" }} // Focus effect
-      />
-      <Button
-        colorScheme="teal"
-        onClick={handleSearch}
-        ml={10}
-        color="white" // Text color
-        bg="black" // Background color
-        _hover={{ bg: "gray.700" }} // Hover effect
-        fontSize="lg" // Button text size
-        // borderColor="white" // Outline color
-        // borderWidth="2px" // Border thickness
-        // borderRadius="10px" // Rounded borders
-      >
-        Search
-      </Button>
-    </Flex>
-  );
-};
+//   const handleSearch = async () => {
+//     // Handle search logic here
+//     // console.log('Searching for:', searchTerm);
+//     try {
+//       const response = await fetch(
+//         `http://127.0.0.1:5000/search?applicant_name=${searchTerm}`
+//       );
+//       if (!response.ok) {
+//         throw new Error("Network response was not ok");
+//       }
+//       const data = await response.json();
+//       console.log("Fetched data:", data);
+//       // Handle the fetched data as needed
+//     } catch (error) {
+//       console.error("Fetch error:", error);
+//     }
+//   };
 
-const ApplicantCard = ({ applicantName, score }) => {
+//   return (
+//     <Flex align="center" justify="center" mt={6} height="20%">
+//       <Input
+//         placeholder="Search an applicant name..."
+//         value={searchTerm}
+//         onChange={(e) => setSearchTerm(e.target.value)}
+//         size="lg"
+//         width="40%"
+//         height="40px"
+//         color="white" // Text color
+//         bg="black" // Background color
+//         _placeholder={{ color: "gray.400" }} // Placeholder color
+//         borderColor="white" // Outline color
+//         borderWidth="2px" // Border thickness
+//         borderRadius="10px" // Rounded borders
+//         fontSize="lg" // Text size
+//         paddingLeft="10px"
+//         _focus={{ borderColor: "teal.300", boxShadow: "0 0 0 1px teal.300" }} // Focus effect
+//       />
+//       <Button
+//         colorScheme="teal"
+//         onClick={handleSearch}
+//         ml={10}
+//         color="white" // Text color
+//         bg="black" // Background color
+//         _hover={{ bg: "gray.700" }} // Hover effect
+//         fontSize="lg" // Button text size
+//         // borderColor="white" // Outline color
+//         // borderWidth="2px" // Border thickness
+//         // borderRadius="10px" // Rounded borders
+//       >
+//         Search
+//       </Button>
+//     </Flex>
+//   );
+// };
+
+const ApplicantCard: React.FC<ApplicantCardProps> = ({
+  applicantName,
+  score,
+}) => {
   return (
     <Flex align="center" justify="center">
       <Box
@@ -94,9 +102,16 @@ const ApplicantCard = ({ applicantName, score }) => {
   );
 };
 
+interface ApplicantData {
+  name: string;
+  score: number;
+}
+
 export default function Chat() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [applicantData, setApplicantData] = useState(null);
+  const [applicantData, setApplicantData] = useState<ApplicantData | null>(
+    null
+  );
   const toast = useToast();
   const handleSearch = async () => {
     // Handle search logic here
@@ -114,9 +129,13 @@ export default function Chat() {
       // Handle the fetched data as needed
     } catch (error) {
       console.error("Fetch error:", error);
+      let errorMessage = "An unknown error occurred";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
       toast({
         title: "Error fetching data.",
-        description: error.message,
+        description: errorMessage,
         status: "error",
         duration: 3000,
         isClosable: true,

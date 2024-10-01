@@ -9,5 +9,4 @@ Werkzeug==3.0.4
 torch
 openai
 scikit-learn
-Flask
 gunicorn

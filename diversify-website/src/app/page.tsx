@@ -117,8 +117,11 @@ export default function Chat() {
     // Handle search logic here
     // console.log('Searching for:', searchTerm);
     try {
+      console.log(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/search?applicant_name=${searchTerm}`
+      );
       const response = await fetch(
-        `http://127.0.0.1:5000/search?applicant_name=${searchTerm}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/search?applicant_name=${searchTerm}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");

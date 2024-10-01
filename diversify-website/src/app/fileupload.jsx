@@ -28,10 +28,14 @@ export default function FileUpload() {
     data.append("file", file);
     data.append("filename", file.filename);
     try {
-      const response = await fetch("http://127.0.0.1:5000/upload", {
-        method: "POST",
-        body: data,
-      });
+      console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
       if (!response.ok) {
         console.log(response);
         throw new Error("Bad request");

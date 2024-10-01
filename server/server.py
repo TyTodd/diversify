@@ -26,8 +26,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['EXTRACT_FOLDER'] = EXTRACT_FOLDER
 applicant_files = []
 
-CORS(app, origins=["https://diversify-peglgctvl-tyrins-projects.vercel.app", "http://localhost:3000"])
-
+CORS(app, 
+     origins=["https://diversify-peglgctvl-tyrins-projects.vercel.app", "http://localhost:3000"], 
+     allow_headers=["Content-Type", "Authorization", "Access-Control-Allow-Credentials"],
+     supports_credentials=True)
 # Helper function to check if the file has a valid extension
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
